@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    h1 {
+        @apply text-2xl;
+    }
+    h2{
+        @apply text-xl
+    }
+    ol, ul{
+        @apply list-disc
+    }
+    ol, ul{
+        @apply ml-8
+    }
+    .p-menubar-root-list{
+        @apply mb-0;
+        @apply ml-0;
+        list-style: none;
+    }
+    .p-menuitem-link, .p-submenu-list{
+        @apply ml-0;
+        text-decoration: none;
+        list-style: none;
+    }
+    .p-menuitem-text{
+        @apply mr-1;
+    }
+}
