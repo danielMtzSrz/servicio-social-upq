@@ -96,3 +96,7 @@ INSERT INTO permissions (module_name, name, guard_name, description) VALUES
 ('user', 'user.store', 'sanctum', 'user - Crear registros'),
 ('user', 'user.update', 'sanctum', 'user - Actualizar registros'),
 ('user', 'user.destroy', 'sanctum', 'user - Eliminar registros');
+
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
+(1, 'Superadmin', 'sanctum', '2024-08-11 19:20:31', '2024-08-11 19:20:31');
+
