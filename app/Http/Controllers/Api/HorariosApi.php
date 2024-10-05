@@ -12,20 +12,6 @@ class HorariosApi extends Controller
 {
     public function MateriaHorario($id_grupo)
     {
-        // dd(
-        //     Grupo::with(['aula', 'carrera', 'tutor', 'grupoMateria' => function($query) {
-        //         $query->with(['profesor', 'materia', 'grupo'])->select(['id', 'profesor_id', 'materia_id', 'grupo_id', 'horarios']);
-        //     }])
-        //     ->where('id', 3)
-        //     ->first()
-        //     ->grupoMateria->map(function($grupo_materia) {
-        //         $materia_nombre = isset($grupo_materia->materia->nombre) ? $grupo_materia->materia->nombre : 'Sin materia';
-        //         $materia_horario = isset($grupo_materia->horarios) ? $grupo_materia->horarios : null;
-        //         return [
-        //             'horario_materia' => $this->transformarHorariosConCarbon($materia_nombre, $materia_horario)
-        //         ];
-        //     })
-        // );
         $data = Grupo::with(['aula', 'carrera', 'tutor', 'grupoMateria' => function($query) {
                 $query->with(['profesor', 'materia', 'grupo'])->select(['id', 'profesor_id', 'materia_id', 'grupo_id', 'horarios']);
             }])
@@ -34,15 +20,16 @@ class HorariosApi extends Controller
             ->grupoMateria->map(function($grupo_materia) {
                 $materia_nombre = isset($grupo_materia->materia->nombre) ? $grupo_materia->materia->nombre : 'Sin materia';
                 $materia_horario = isset($grupo_materia->horarios) ? $grupo_materia->horarios : null;
+                $materia_profesor = isset($grupo_materia->profesor) ?  $grupo_materia->profesor->name." ".$grupo_materia->profesor->apellido_paterno." ".$grupo_materia->profesor->apellido_materno : 'Sin profesor';
                 return [
-                    'horario_materia' => $this->transformarHorariosConCarbon($materia_nombre, $materia_horario)
+                    'horario_materia' => $this->transformarHorariosConCarbon($materia_nombre, $materia_horario, $materia_profesor)
                 ];
             });
 
         return response()->json($data);
     }
 
-    public function transformarHorariosConCarbon($materia_nombre, $materia_horario)
+    public function transformarHorariosConCarbon($materia_nombre, $materia_horario, $materia_profesor)
     {
         $diasMapa = ['lunes' => 1, 'martes' => 2, 'miercoles' => 3, 'jueves' => 4, 'viernes' => 5, 'sabado' => 6, 'domingo' => 0];
     
@@ -73,6 +60,7 @@ class HorariosApi extends Controller
             if (!isset($horariosAgrupados[$key])) {
                 $horariosAgrupados[$key] = [
                     'title' => $materia_nombre,
+                    'profesor' => $materia_profesor,
                     'startTime' => $horario['startTime'],
                     'endTime' => $horario['endTime'],
                     'daysOfWeek' => [],

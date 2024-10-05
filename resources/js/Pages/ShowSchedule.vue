@@ -17,6 +17,8 @@
                 <template v-slot:eventContent='arg'>
                     <b class="text-xs">{{ arg.event.title }}</b>
                     <br>
+                    <b class="text-xs">{{ arg.event.extendedProps.profesor }}</b>
+                    <br>
                     <small>{{ moment(arg.event.start).format("HH:mm A") }} - {{ moment(arg.event.end).format("HH:mm A") }}</small>
                 </template>
             </FullCalendar>

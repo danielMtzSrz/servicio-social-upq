@@ -59,6 +59,8 @@
                         </div>
                     </div>
 
+                    <p>Horarios materia</p>
+
                     <Schedules
                         v-model="form.horarios"
                         :errors="form.errors.horarios"
